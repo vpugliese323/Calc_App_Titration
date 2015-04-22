@@ -16,15 +16,15 @@ void acetic()
 {
 	float A, B, C;
 	float Ka = 0.0000177;//value found online
-	float pKa = -log10(Ka);// Should be about 4.7520
+	float pKa = 4.7520;
 
 	ofstream myfile;//open text file
 	myfile.open("acetic.txt");
 
 	cout << "Molarity CH3CO2H: ";
 	cin >> A;
-	cout << "\nMolarity H3O+: ";
-	cin >> B;
+	//cout << "\nMolarity H3O+: ";
+	//cin >> B;
 	cout << "\nMolarity NaOH: ";
 	cin >> C;
 	cout << "\n";
@@ -44,11 +44,11 @@ void acetic()
 	mL = 1;//add 1 mL NaOH
 	//Assume 1 liter of acetic acid
 	//Use mmol to make increments simpler
-	float mmolC; //declared here to increase scope
+	float mmolC, mmolA; //declared here to increase scope
 
-	while((A-C) != 0.0)
+	while((mmolA-mmolC) > 0)
 	{
-		float Vt = 1000 + mL;//Find total volume of solution
+		unsigned int Vt = 1000 + mL;//Find total volume of solution
 		float mmolA = A*Vt;//find mmol of acid
 		mmolC = C*Vt;//Find mmol of base; mol NaOH = mol OH-
 		pH = pKa + log10(mmolC/(mmolA-mmolC));
@@ -57,6 +57,7 @@ void acetic()
 		s << "(" << mL << "," << pH << ")";
 		myfile << s.str() << "\n";
 		mL++;
+		cout << mmolA-mmolC << "\n";
 	}
 
 //Part 3:
@@ -114,7 +115,8 @@ int main()
 			break;
 	}
 
-	cout << "PRESS ENTER TO TERMINATE PROGRAM\n";
-	cin.get();
+/*	cout << "PRESS ENTER TO TERMINATE PROGRAM\n";
+	cin.ignore();
+	cin.get();*/
 	return 0;
 }
